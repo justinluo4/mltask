@@ -23,9 +23,10 @@ class ClipTransformer(object):
 
 
 class Caltech101DataModule(pl.LightningDataModule):
-    def __init__(self, test_split = 0.2):
+    def __init__(self, test_split = 0.1, valid_split=0.1):
         super().__init__()
         self.test_split = test_split
+        self.valid_split = valid_split
 
     def prepare_data(self):
         # download
@@ -37,10 +38,12 @@ class Caltech101DataModule(pl.LightningDataModule):
         # Assign train/val datasets for use in dataloaders
 
         data_full = datasets.Caltech101(root="data", transform=ClipTransformer())
-        train_size = int((1 - self.test_split) * len(data_full))
-        self.data_train, self.data_test = random_split(
+
+        test_size = int(self.test_split * len(data_full))
+        valid_size = int(self.valid_split * len(data_full))
+        self.data_train, self.data_test , self.data_valid = random_split(
             data_full,
-            [train_size, len(data_full) - train_size],
+            [len(data_full) - test_size - valid_size, test_size, valid_size],
             generator=torch.Generator().manual_seed(10))
 
     def test_dataloader(self):
@@ -48,3 +51,6 @@ class Caltech101DataModule(pl.LightningDataModule):
 
     def train_dataloader(self):
         return DataLoader(self.data_train, batch_size=64)
+
+    def val_dataloader(self):
+        return DataLoader(self.data_valid, batch_size=64)
