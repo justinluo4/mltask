@@ -4,4 +4,4 @@ This project uses the CLIP pretrained transform on top of a lightweight neural n
 
 [Run in Colab](https://githubtocolab.com/justinluo4/mltask/blob/master/notebooks/run.ipynb)
 
-[WandB Report](https://wandb.ai/justinluo4/mltask/reports/CLIP-Neural-Network-Image-Classifier-for-Caltech101--Vmlldzo2NjY2ODcw)
+[wandb Report](https://wandb.ai/justinluo4/mltask/reports/CLIP-Neural-Network-Image-Classifier-for-Caltech101--Vmlldzo2NjY2ODcw)
