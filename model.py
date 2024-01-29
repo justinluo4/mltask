@@ -6,15 +6,19 @@ import torchmetrics
 
 # Define your neural network model
 class NeuralNetwork(pl.LightningModule):
-    def __init__(self):
+    def __init__(self, layers = [], learning_rate = 0.001):
         super(NeuralNetwork, self).__init__()
-
+        self.learning_rate = learning_rate
         self.flatten = nn.Flatten()
+        layers.insert(0, 512)
+        layers.append(101)
         self.model = nn.Sequential(
-            nn.Linear(512, 101),
+            *[nn.Linear(layers[i], layers[i+1]) for i in range(len(layers)-1)]
         )
         self.loss_fn = nn.CrossEntropyLoss()
         self.accuracy = torchmetrics.Accuracy(task="multiclass", num_classes=101)
+
+
 
     def forward(self, x):
         x = self.flatten(x)
@@ -46,4 +50,4 @@ class NeuralNetwork(pl.LightningModule):
         return torch.argmax(y_hat, dim=1)
 
     def configure_optimizers(self):
-        return torch.optim.Adam(self.parameters(), lr=0.001)
+        return torch.optim.Adam(self.parameters(), lr=self.learning_rate)
