@@ -22,7 +22,7 @@ if __name__ == "__main__":
     learning_rate = 0.001
     if args.LearningRate:
         learning_rate = float(args.LearningRate)
-    run_name = "hl-" + "-".join(hidden_layers) + "-lr-" + str(learning_rate)
+    run_name = "hl-" + str(hidden_layers) + "-lr-" + str(learning_rate)
 
     max_epochs = 10
     if args.Epochs:
