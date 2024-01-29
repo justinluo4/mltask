@@ -15,7 +15,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Neural Network Parameters
-    hidden_layers = [256]
+    hidden_layers = []
     if args.HiddenLayers:
         hidden_layers = [int(l) for l in args.HiddenLayers.split()]
 
